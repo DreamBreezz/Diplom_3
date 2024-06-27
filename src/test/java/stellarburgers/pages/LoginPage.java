@@ -19,19 +19,30 @@ public class LoginPage {
 
     // открытие страницы
     public LoginPage openPage() {
-        driver.get(EnvConfig.MAIN_URL + "/account/profile");
+        driver.get(EnvConfig.MAIN_URL + "/login");
         return this;
     }
 
 
     // === Локаторы ===
-    // ссылка "Восстановить пароль"
-    public static final By recoverPassButton = By.
-            xpath(".//a[contains(@href, '/forgot-password')]");
+    // поле "Email"
+    private final By inputEmail = By.xpath(".//label[text()='Email']/following-sibling::input");
+
+    // поле "Пароль"
+    private final By inputPassword = By.xpath(".//label[text()='Пароль']/following-sibling::input");
 
     // кнопка "Зарегистрироваться"
     public static final By registerButton = By.
             xpath(".//a[contains(@href, '/register')]");
+
+    // ссылка "Восстановить пароль"
+    public static final By recoverPassButton = By.
+            xpath(".//a[contains(@href, '/forgot-password')]");
+
+    // кнопка "Войти"
+    public static final By enterButton = By.
+            xpath(".//button[text()='Войти']");
+
 
     // === Действия ===
     @Step("Ожидание загрузки страницы")
@@ -44,5 +55,22 @@ public class LoginPage {
     @Step("Клик по кнопке 'Зарегистрироваться'")
     public void clickRegisterLink() {
         driver.findElement(registerButton).click();
+    }
+
+    @Step("Ввод email")
+    public LoginPage inputEmail() {
+        driver.findElement(inputEmail).sendKeys("jsm0001@mail.mail");
+        return this;
+    }
+
+    @Step("Ввод пароля")
+    public LoginPage inputPassword() {
+        driver.findElement(inputPassword).sendKeys("P@ssword");
+        return this;
+    }
+
+    @Step("Клик по кнопке 'Войти'")
+    public void clickEnterButton() {
+        driver.findElement(enterButton).click();
     }
 }

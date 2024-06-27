@@ -49,26 +49,20 @@ public class RegisterPage {
     }
 
     @Step("Ввод имени")
-    public RegisterPage inputName() {
-        driver.findElement(inputName).sendKeys("Джон Смит");
+    public RegisterPage inputName(String name) {
+        driver.findElement(inputName).sendKeys(name);
         return this;
     }
 
     @Step("Ввод email")
-    public RegisterPage inputEmail() {
-        driver.findElement(inputEmail).sendKeys("jsm0001@mail.mail");
+    public RegisterPage inputEmail(String email) {
+        driver.findElement(inputEmail).sendKeys(email);
         return this;
     }
 
     @Step("Ввод пароля")
-    public RegisterPage inputPassword() {
-        driver.findElement(inputPassword).sendKeys("P@ssword");
-        return this;
-    }
-
-    @Step("Ввод неподходящего пароля")
-    public RegisterPage inputWrongPassword() {
-        driver.findElement(inputPassword).sendKeys("123");
+    public RegisterPage inputPassword(String pass) {
+        driver.findElement(inputPassword).sendKeys(pass);
         return this;
     }
 

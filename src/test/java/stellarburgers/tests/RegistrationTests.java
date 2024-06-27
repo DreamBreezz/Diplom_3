@@ -1,10 +1,9 @@
 package stellarburgers.tests;
 
 import io.qameta.allure.junit4.DisplayName;
-import lombok.extern.java.Log;
-import org.junit.BeforeClass;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.junit.*;
+import praktikum.jsons.CreateUserRequestJson;
+import praktikum.jsons.generators.CreateUserJsonGenerator;
 import stellarburgers.DriverRule;
 import stellarburgers.pages.LoginPage;
 import stellarburgers.pages.MainPage;
@@ -17,38 +16,16 @@ import stellarburgers.pages.RegisterPage;
 
 public class RegistrationTests {
 
+    private static final CreateUserJsonGenerator userJson = new CreateUserJsonGenerator();
+    private static CreateUserRequestJson newUser;
+    public static boolean isUserCreated;
+
     @ClassRule
     public static DriverRule driverRule = new DriverRule();
 
-    @BeforeClass
-    // открыть страницу
-    public static void openPageAndAcceptCookies() {
-        new MainPage(driverRule.getDriver())
-                .openPage();
-    }
-    @Test
-    @DisplayName("[+] Регистрация пользователя")
-    public void registrationTest() {
-        new MainPage(driverRule.getDriver())
-                .openPage()
-                .waitForLoadingPage()
-                .clickAccountButton();
-        new LoginPage(driverRule.getDriver())
-                .waitForLoadingPage()
-                .clickRegisterLink();
-        new RegisterPage(driverRule.getDriver())
-                .waitForLoadingPage()
-                .inputName()
-                .inputEmail()
-                .inputPassword()
-                .clickRegisterButton();
-        new LoginPage(driverRule.getDriver())
-                .waitForLoadingPage();
-    }
-
-    @Test
-    @DisplayName("[–] Регистрация с некорректным паролем")
-    public void registrationWrongPasswordTest() {
+    @Before
+    public void openPageAndNavigate() {
+        newUser = userJson.random();
         new MainPage(driverRule.getDriver())
                 .openPage()
                 .waitForLoadingPage()
@@ -56,14 +33,39 @@ public class RegistrationTests {
         new LoginPage(driverRule.getDriver())
                 .waitForLoadingPage()
                 .clickRegisterLink();
+    }
+
+    public static boolean getCreated() {
+        return isUserCreated;
+    }
+
+    public static CreateUserRequestJson getNewUser() {
+        return newUser;
+    }
+
+    @Test
+    @DisplayName("[+] Регистрация пользователя")
+    public void registrationTest() {
         new RegisterPage(driverRule.getDriver())
                 .waitForLoadingPage()
-                .inputName()
-                .inputEmail()
-                .inputWrongPassword()
+                .inputName(newUser.getName())
+                .inputEmail(newUser.getEmail())
+                .inputPassword(newUser.getPassword())
+                .clickRegisterButton();
+        isUserCreated = true;
+        new LoginPage(driverRule.getDriver())
+                .waitForLoadingPage();
+    }
+
+    @Test
+    @DisplayName("[–] Регистрация с некорректным паролем. Пароль: 123")
+    public void registrationWrongPasswordTest() {
+        new RegisterPage(driverRule.getDriver())
+                .waitForLoadingPage()
+                .inputName(newUser.getName())
+                .inputEmail(newUser.getEmail())
+                .inputPassword("123")
                 .clickRegisterButton()
                 .checkWrongPasswordWarning();
     }
-
-    /////
 }
