@@ -1,11 +1,14 @@
 package stellarburgers.tests;
 
 import io.qameta.allure.junit4.DisplayName;
+import lombok.extern.java.Log;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
 import stellarburgers.DriverRule;
+import stellarburgers.pages.LoginPage;
 import stellarburgers.pages.MainPage;
+import stellarburgers.pages.RegisterPage;
 
 /** Проверь:
  * Успешную регистрацию.
@@ -24,30 +27,42 @@ public class RegistrationTests {
                 .openPage();
     }
     @Test
-    @DisplayName("Регистрация пользователя")
+    @DisplayName("[+] Регистрация пользователя")
     public void registrationTest() {
-        new MainPage(driverRule.getDriver());
-        // открыть главную
-        // клик на Личный кабинет
-        // клик на Зарегистрироваться
-        // ввод имени
-        // ввод емеил
-        // ввод пароль
-        // клик на Зарегистрироваться
-        // что-то увидеть
+        new MainPage(driverRule.getDriver())
+                .openPage()
+                .waitForLoadingPage()
+                .clickAccountButton();
+        new LoginPage(driverRule.getDriver())
+                .waitForLoadingPage()
+                .clickRegisterLink();
+        new RegisterPage(driverRule.getDriver())
+                .waitForLoadingPage()
+                .inputName()
+                .inputEmail()
+                .inputPassword()
+                .clickRegisterButton();
+        new LoginPage(driverRule.getDriver())
+                .waitForLoadingPage();
     }
 
     @Test
     @DisplayName("[–] Регистрация с некорректным паролем")
     public void registrationWrongPasswordTest() {
-        // открыть главную
-        // клик на Личный кабинет
-        // клик на Зарегистрироваться
-        // ввод имени
-        // ввод емеил
-        // ввод пароль
-        // клик на Зарегистрироваться
-        // что-то увидеть
+        new MainPage(driverRule.getDriver())
+                .openPage()
+                .waitForLoadingPage()
+                .clickEnterAccountButton();
+        new LoginPage(driverRule.getDriver())
+                .waitForLoadingPage()
+                .clickRegisterLink();
+        new RegisterPage(driverRule.getDriver())
+                .waitForLoadingPage()
+                .inputName()
+                .inputEmail()
+                .inputWrongPassword()
+                .clickRegisterButton()
+                .checkWrongPasswordWarning();
     }
 
     /////
