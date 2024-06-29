@@ -1,9 +1,14 @@
 package stellarburgers.tests;
 
+import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
+import io.restassured.response.ValidatableResponse;
 import org.junit.*;
+import praktikum.Check;
 import praktikum.jsons.CreateUserRequestJson;
 import praktikum.jsons.generators.CreateUserJsonGenerator;
+import praktikum.jsons.generators.LoginUserJsonGenerator;
+import praktikum.rests.UserRests;
 import stellarburgers.DriverRule;
 import stellarburgers.pages.LoginPage;
 import stellarburgers.pages.MainPage;
@@ -17,8 +22,12 @@ import stellarburgers.pages.RegisterPage;
 public class RegistrationTests {
 
     private static final CreateUserJsonGenerator userJson = new CreateUserJsonGenerator();
-    private static CreateUserRequestJson newUser;
-    public static boolean isUserCreated;
+    private static final UserRests userRest = new UserRests();
+    private static final LoginUserJsonGenerator loginJson = new LoginUserJsonGenerator();
+    private static final Check check = new Check();
+
+    static CreateUserRequestJson newUser;
+    private static boolean isUserCreated;
 
     @ClassRule
     public static DriverRule driverRule = new DriverRule();
@@ -35,12 +44,20 @@ public class RegistrationTests {
                 .clickRegisterLink();
     }
 
-    public static boolean getCreated() {
-        return isUserCreated;
-    }
+    @After
+    @Step("Удаление пользователя через API")
+    public void deleteUserIfCreated() {
+        if (isUserCreated) {
+            var newLogin = loginJson.from(newUser);
+            ValidatableResponse loginUserResponse = userRest.login(newLogin);
+            String accessToken = check.extractAccessToken(loginUserResponse);
 
-    public static CreateUserRequestJson getNewUser() {
-        return newUser;
+            ValidatableResponse creationResponse = userRest.delete(accessToken);
+            check.code202andSuccess(creationResponse);
+            check.userRemovedMessage(creationResponse);
+            accessToken = null;
+            isUserCreated = false;
+        }
     }
 
     @Test
