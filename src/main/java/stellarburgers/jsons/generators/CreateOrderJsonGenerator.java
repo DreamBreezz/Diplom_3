@@ -1,8 +1,8 @@
-package praktikum.jsons.generators;
+package stellarburgers.jsons.generators;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
-import praktikum.jsons.OrderRequestJson;
+import stellarburgers.jsons.OrderRequestJson;
 
 import java.util.ArrayList;
 

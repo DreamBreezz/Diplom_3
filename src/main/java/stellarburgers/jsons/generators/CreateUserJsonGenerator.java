@@ -1,7 +1,7 @@
-package praktikum.jsons.generators;
+package stellarburgers.jsons.generators;
 
 import com.github.javafaker.Faker;
-import praktikum.jsons.CreateUserRequestJson;
+import stellarburgers.jsons.CreateUserRequestJson;
 
 public class CreateUserJsonGenerator {
 

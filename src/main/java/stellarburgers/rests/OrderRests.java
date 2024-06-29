@@ -1,12 +1,12 @@
-package praktikum.rests;
+package stellarburgers.rests;
 
 import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
-import praktikum.jsons.OrderRequestJson;
+import stellarburgers.jsons.OrderRequestJson;
 
-import static praktikum.Constants.INGR_PATH;
-import static praktikum.Constants.ORDERS_PATH;
-import static praktikum.rests.RestBase.spec;
+import static stellarburgers.Constants.INGR_PATH;
+import static stellarburgers.Constants.ORDERS_PATH;
+import static stellarburgers.rests.RestBase.spec;
 
 public class OrderRests {
 

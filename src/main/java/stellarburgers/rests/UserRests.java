@@ -1,12 +1,12 @@
-package praktikum.rests;
+package stellarburgers.rests;
 
 import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
-import praktikum.jsons.CreateUserRequestJson;
-import praktikum.jsons.UserRequestJson;
+import stellarburgers.jsons.CreateUserRequestJson;
+import stellarburgers.jsons.UserRequestJson;
 
-import static praktikum.Constants.*;
-import static praktikum.rests.RestBase.spec;
+import static stellarburgers.Constants.*;
+import static stellarburgers.rests.RestBase.spec;
 
 public class UserRests {
     @Step("Отправка запроса на создание пользователя")

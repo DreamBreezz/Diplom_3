@@ -1,4 +1,4 @@
-package praktikum;
+package stellarburgers;
 
 public class Constants {
     // API Paths

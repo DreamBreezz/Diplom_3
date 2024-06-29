@@ -58,14 +58,14 @@ public class LoginPage {
     }
 
     @Step("Ввод email")
-    public LoginPage inputEmail() {
-        driver.findElement(inputEmail).sendKeys("jsm0001@mail.mail");
+    public LoginPage inputEmail(String email) {
+        driver.findElement(inputEmail).sendKeys(email);
         return this;
     }
 
     @Step("Ввод пароля")
-    public LoginPage inputPassword() {
-        driver.findElement(inputPassword).sendKeys("P@ssword");
+    public LoginPage inputPassword(String pass) {
+        driver.findElement(inputPassword).sendKeys(pass);
         return this;
     }
 

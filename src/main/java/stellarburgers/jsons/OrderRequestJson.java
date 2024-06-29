@@ -1,4 +1,4 @@
-package praktikum.jsons;
+package stellarburgers.jsons;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

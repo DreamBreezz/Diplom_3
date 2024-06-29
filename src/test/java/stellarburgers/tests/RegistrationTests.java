@@ -4,11 +4,11 @@ import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.junit.*;
-import praktikum.Check;
-import praktikum.jsons.CreateUserRequestJson;
-import praktikum.jsons.generators.CreateUserJsonGenerator;
-import praktikum.jsons.generators.LoginUserJsonGenerator;
-import praktikum.rests.UserRests;
+import stellarburgers.Check;
+import stellarburgers.jsons.CreateUserRequestJson;
+import stellarburgers.jsons.generators.CreateUserJsonGenerator;
+import stellarburgers.jsons.generators.LoginUserJsonGenerator;
+import stellarburgers.rests.UserRests;
 import stellarburgers.DriverRule;
 import stellarburgers.pages.LoginPage;
 import stellarburgers.pages.MainPage;
@@ -26,7 +26,7 @@ public class RegistrationTests {
     private static final LoginUserJsonGenerator loginJson = new LoginUserJsonGenerator();
     private static final Check check = new Check();
 
-    static CreateUserRequestJson newUser;
+    private static CreateUserRequestJson newUser;
     private static boolean isUserCreated;
 
     @ClassRule

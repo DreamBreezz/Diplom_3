@@ -1,17 +1,17 @@
-package praktikum;
+package stellarburgers;
 
 import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
 import org.junit.Assert;
-import praktikum.jsons.CreateUserRequestJson;
-import praktikum.jsons.UserRequestJson;
+import stellarburgers.jsons.CreateUserRequestJson;
+import stellarburgers.jsons.UserRequestJson;
 
 import java.util.ArrayList;
 
 import static java.net.HttpURLConnection.*;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
-import static praktikum.Constants.*;
+import static stellarburgers.Constants.*;
 
 public class Check {
 
