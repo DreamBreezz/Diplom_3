@@ -24,7 +24,7 @@ public class LoginPage {
     }
 
 
-    // === Локаторы ===
+    // === Л О К А Т О Р Ы ===
     // поле "Email"
     private final By inputEmail = By.xpath(".//label[text()='Email']/following-sibling::input");
 
@@ -44,7 +44,7 @@ public class LoginPage {
             xpath(".//button[text()='Войти']");
 
 
-    // === Действия ===
+    // === Д Е Й С Т В И Я ===
     @Step("Ожидание загрузки страницы")
     public LoginPage waitForLoadingPage() {
         new WebDriverWait(driver, Duration.ofSeconds(EnvConfig.DEFAULT_TIMEOUT))

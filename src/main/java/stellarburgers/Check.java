@@ -26,6 +26,11 @@ public class Check {
         return response.extract().path("accessToken");
     }
 
+    @Step("Сохранение токена авторизации")
+    public String extractRefreshToken(ValidatableResponse response) {
+        return response.extract().path("refreshToken");
+    }
+
     @Step("Сохранение списка ингредиентов")
     public ArrayList<String> extractIngredients(ValidatableResponse response) {
         return response.extract().path("data._id");

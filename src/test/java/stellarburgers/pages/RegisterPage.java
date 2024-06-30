@@ -19,14 +19,18 @@ public class RegisterPage {
 
     // открытие страницы
     public RegisterPage openPage() {
-        driver.get(EnvConfig.MAIN_URL + "/login");
+        driver.get(EnvConfig.MAIN_URL + "/register");
         return this;
     }
 
-    // === Локаторы ===
+    // === Л О К А Т О Р Ы ===
     // кнопка "Зарегистрироваться"
     public static final By registerButton = By.
             xpath(".//button[text()='Зарегистрироваться']");
+
+    // ссылка "Войти"
+    public static final By enterLink = By.
+            xpath(".//a[contains(@href, '/login')]");
 
     // поле "Имя"
     private final By inputName = By.xpath(".//label[text()='Имя']/following-sibling::input");
@@ -40,7 +44,7 @@ public class RegisterPage {
     // текст "Некорректный пароль"
     private final By wrongPasswordText = By.xpath(".//p[text()='Некорректный пароль']");
 
-    // === Действия ===
+    // === Д Е Й С Т В И Я ===
     @Step("Ожидание загрузки страницы")
     public RegisterPage waitForLoadingPage() {
         new WebDriverWait(driver, Duration.ofSeconds(EnvConfig.DEFAULT_TIMEOUT))
@@ -75,5 +79,11 @@ public class RegisterPage {
     @Step("Проверка наличия текста 'Некорректный пароль'")
     public void checkWrongPasswordWarning() {
         driver.findElement(wrongPasswordText);
+    }
+
+    @Step("Клик по ссылке 'Войти'")
+    public RegisterPage clickEnterLink() {
+        driver.findElement(enterLink).click();
+        return this;
     }
 }

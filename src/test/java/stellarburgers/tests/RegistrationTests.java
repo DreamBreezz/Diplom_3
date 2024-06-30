@@ -33,6 +33,7 @@ public class RegistrationTests {
     public static DriverRule driverRule = new DriverRule();
 
     @Before
+    @Step("Создание пользователя, открытие главной страницы и открытие страницы логина")
     public void openPageAndNavigate() {
         newUser = userJson.random();
         new MainPage(driverRule.getDriver())
