@@ -15,6 +15,7 @@ import stellarburgers.pages.RegisterPage;
  * вход через кнопку в форме регистрации,
  * вход через кнопку в форме восстановления пароля.
  */
+
 public class UnauthorizedUserNavigationTests {
     @ClassRule
     public static DriverRule driverRule = new DriverRule();

@@ -38,6 +38,7 @@ public class MainPage {
     public static final By accountButton = By.
             xpath(".//a[contains(@href, '/account')]");
 
+
     // === Д Е Й С Т В И Я ===
     @Step("Ожидание загрузки страницы (неавторизованный пользователь)")
     public MainPage waitForLoadingPage() {

@@ -11,16 +11,17 @@ import stellarburgers.Check;
 import stellarburgers.DriverRule;
 import stellarburgers.jsons.CreateUserRequestJson;
 import stellarburgers.jsons.generators.CreateUserJsonGenerator;
+import stellarburgers.pages.LoginPage;
 import stellarburgers.pages.MainPage;
 import stellarburgers.pages.ProfilePage;
 import stellarburgers.rests.UserRests;
 
 /**
- *  * Проверь переход по клику на «Личный кабинет».
- *  * Проверь переход по клику на «Конструктор» и на логотип Stellar Burgers.
- *  * Проверь выход по кнопке «Выйти» в личном кабинете.
- *
+ * Проверь переход по клику на «Личный кабинет».
+ * Проверь переход по клику на «Конструктор» и на логотип Stellar Burgers.
+ * Проверь выход по кнопке «Выйти» в личном кабинете.
  */
+
 public class AuthorizedUserNavigationTests {
     private static final CreateUserJsonGenerator userJson = new CreateUserJsonGenerator();
     private static final UserRests userRest = new UserRests();
@@ -38,14 +39,14 @@ public class AuthorizedUserNavigationTests {
     public void createUserAndOpenLoginPage() {
         CreateUserRequestJson newUser = userJson.random();  // генерация json рандомного пользователя
         ValidatableResponse createUserResponse = userRest.create(newUser);  // создание пользователя через API,
-        check.code201andSuccess(createUserResponse);  // чтобы не создавать через страницу регистрации
+        check.code201andSuccess(createUserResponse);           // чтобы не создавать через страницу регистрации
         isUserCreated = true;
         refreshToken = check.extractRefreshToken(createUserResponse);
         accessToken = check.extractAccessToken(createUserResponse);
 
         new MainPage(driverRule.getDriver())
-                .openPage()  // сначала открытие страницы без параметров, т.к. в Local Storage нельзя записывать,
-                .waitForLoadingPage()  // пока открыта страница data:.
+                .openPage()            // сначала открытие страницы без параметров, т.к. в Local Storage
+                .waitForLoadingPage()  // нельзя записывать, пока открыта страница data:,
                 .setLocalStorage(refreshToken, accessToken)
                 .refresh()
                 .waitForLoadingPageAuthUser();
@@ -70,6 +71,36 @@ public class AuthorizedUserNavigationTests {
         new MainPage(driverRule.getDriver())
                 .clickAccountButton();
         new ProfilePage(driverRule.getDriver())
+                .waitForLoadingPage();
+    }
+
+    @Test
+    @DisplayName("Переход на главную страницу по кнопке 'Конструктор'")
+    public void toMainPageFromProfileViaConstructorButton() {
+        toProfileFromMainPage();
+        new ProfilePage(driverRule.getDriver())
+                .clickConstructorButton();
+        new MainPage(driverRule.getDriver())
+                .waitForLoadingPageAuthUser();
+    }
+
+    @Test
+    @DisplayName("Переход на главную страницу по клику на логотип")
+    public void toMainPageFromProfileViaLogo() {
+        toProfileFromMainPage();
+        new ProfilePage(driverRule.getDriver())
+                .clickLogo();
+        new MainPage(driverRule.getDriver())
+                .waitForLoadingPageAuthUser();
+    }
+
+    @Test
+    @DisplayName("Выход по кнопке 'Выход'")
+    public void logoutViaLogoutButton() {
+        toProfileFromMainPage();
+        new ProfilePage(driverRule.getDriver())
+                .clickLogoutLink();
+        new LoginPage(driverRule.getDriver())
                 .waitForLoadingPage();
     }
 }
