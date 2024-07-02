@@ -13,7 +13,6 @@ import java.time.Duration;
 public class MainPage {
 
     private final WebDriver driver;
-    private WebDriver driverAuth;
 
     // создание драйвера браузера для теста
     public MainPage(WebDriver driver) {
@@ -65,13 +64,20 @@ public class MainPage {
     }
 
     @Step("Запись в Local Storage токенов аутентификации")
-    public MainPage setLocalStorage(String refreshToken, String accessToken) {
+    public MainPage setTokensToLocalStorage(String refreshToken, String accessToken) {
         JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
         String setRefreshToken = "window.localStorage.setItem('refreshToken', '" + refreshToken + "');";
         String setAccessToken = "window.localStorage.setItem('accessToken', '" + accessToken + "');";
         jsExecutor.executeScript(setRefreshToken);
         jsExecutor.executeScript(setAccessToken);
         return this;
+    }
+
+    @Step("Получение из Local Storage токена аутентификации")
+    public String getAccessTokenFromLocalStorage() {
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+        String getToken = "return window.localStorage.getItem('accessToken');";
+        return (String) jsExecutor.executeScript(getToken);
     }
 
     @Step("Перезагрузка страницы")

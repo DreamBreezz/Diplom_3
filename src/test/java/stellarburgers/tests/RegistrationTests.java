@@ -27,13 +27,12 @@ public class RegistrationTests {
     private static final Check check = new Check();
 
     private static CreateUserRequestJson newUser;
-    private static boolean isUserCreated;
 
     @ClassRule
     public static DriverRule driverRule = new DriverRule();
 
     @Before
-    @Step("Создание пользователя, открытие главной страницы и открытие страницы логина")
+    @Step("Генерация пользовательских данных, открытие главной страницы и открытие страницы логина")
     public void openPageAndNavigate() {
         newUser = userJson.random();
         new MainPage(driverRule.getDriver())
@@ -48,16 +47,15 @@ public class RegistrationTests {
     @After
     @Step("Удаление пользователя через API")
     public void deleteUserIfCreated() {
-        if (isUserCreated) {
-            var newLogin = loginJson.from(newUser);
-            ValidatableResponse loginUserResponse = userRest.login(newLogin);
-            String accessToken = check.extractAccessToken(loginUserResponse);
+        String accessToken;
+        var newLogin = loginJson.from(newUser);
+        ValidatableResponse loginUserResponse = userRest.login(newLogin);
+        accessToken = check.extractAccessToken(loginUserResponse);
 
+        if (accessToken != null) {
             ValidatableResponse creationResponse = userRest.delete(accessToken);
             check.code202andSuccess(creationResponse);
             check.userRemovedMessage(creationResponse);
-            accessToken = null;
-            isUserCreated = false;
         }
     }
 
@@ -70,7 +68,6 @@ public class RegistrationTests {
                 .inputEmail(newUser.getEmail())
                 .inputPassword(newUser.getPassword())
                 .clickRegisterButton();
-        isUserCreated = true;
         new LoginPage(driverRule.getDriver())
                 .waitForLoadingPage();
     }

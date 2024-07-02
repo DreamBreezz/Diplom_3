@@ -29,25 +29,23 @@ public class AuthorizedUserNavigationTests {
 
     public static String accessToken;
     public static String refreshToken;
-    private static boolean isUserCreated;
 
     @ClassRule
     public static DriverRule driverRule = new DriverRule();
 
     @Before
-    @Step("Создание пользователя, логин и авторизация")
+    @Step("Создание пользователя через API, логин и авторизация")
     public void createUserAndOpenLoginPage() {
         CreateUserRequestJson newUser = userJson.random();  // генерация json рандомного пользователя
         ValidatableResponse createUserResponse = userRest.create(newUser);  // создание пользователя через API,
-        check.code201andSuccess(createUserResponse);           // чтобы не создавать через страницу регистрации
-        isUserCreated = true;
+        check.code201andSuccess(createUserResponse);                  // чтобы не создавать через страницу регистрации
         refreshToken = check.extractRefreshToken(createUserResponse);
         accessToken = check.extractAccessToken(createUserResponse);
 
         new MainPage(driverRule.getDriver())
                 .openPage()            // сначала открытие страницы без параметров, т.к. в Local Storage
                 .waitForLoadingPage()  // нельзя записывать, пока открыта страница data:,
-                .setLocalStorage(refreshToken, accessToken)
+                .setTokensToLocalStorage(refreshToken, accessToken)
                 .refresh()
                 .waitForLoadingPageAuthUser();
     }
@@ -55,14 +53,11 @@ public class AuthorizedUserNavigationTests {
     @After
     @Step("Удаление пользователя через API")
     public void deleteUser() {
-        if (isUserCreated) {
-            ValidatableResponse creationResponse = userRest.delete(accessToken);
-            check.code202andSuccess(creationResponse);
-            check.userRemovedMessage(creationResponse);
-            accessToken = null;
-            refreshToken = null;
-            isUserCreated = false;
-        }
+        ValidatableResponse creationResponse = userRest.delete(accessToken);
+        check.code202andSuccess(creationResponse);
+        check.userRemovedMessage(creationResponse);
+        accessToken = null;
+        refreshToken = null;
     }
 
     @Test

@@ -20,20 +20,18 @@ public class LoginTest {
 
     private static CreateUserRequestJson newUser;
     private static String accessToken;
-    private static boolean isUserCreated;
 
     @ClassRule
     public static DriverRule driverRule = new DriverRule();
 
     @Before
-    @Step("Создание пользователя и открытие страницы логина")
+    @Step("Создание пользователя через API и открытие страницы логина")
     public void createUserAndOpenLoginPage() {
         newUser = userJson.random();  // генерация json рандомного пользователя
-        ValidatableResponse createUserResponse = userRest.create(newUser);
+        ValidatableResponse createUserResponse = userRest.create(newUser);  // создание пользователя
         check.code201andSuccess(createUserResponse);
-        isUserCreated = true;
-        accessToken = check.extractAccessToken(createUserResponse);
-
+        accessToken = check.extractAccessToken(createUserResponse);  // сохранение токена авторизации на случай,
+                                                                     // если логин через браузер не сработает
         new LoginPage(driverRule.getDriver())
                 .openPage()
                 .waitForLoadingPage();
@@ -42,23 +40,22 @@ public class LoginTest {
     @After
     @Step("Удаление пользователя через API")
     public void deleteUser() {
-        if (isUserCreated) {
-            ValidatableResponse creationResponse = userRest.delete(accessToken);
-            check.code202andSuccess(creationResponse);
-            check.userRemovedMessage(creationResponse);
-            accessToken = null;
-            isUserCreated = false;
-        }
+        ValidatableResponse creationResponse = userRest.delete(accessToken);
+        check.code202andSuccess(creationResponse);
+        check.userRemovedMessage(creationResponse);
+        accessToken = null;
     }
 
     @Test
-    @DisplayName("Логин пользователя")
+    @DisplayName("[+] Логин пользователя")
     public void loginUserTest() {
         new LoginPage(driverRule.getDriver())
                 .inputEmail(newUser.getEmail())
                 .inputPassword(newUser.getPassword())
                 .clickEnterButton();
-        new MainPage(driverRule.getDriver())
-                .waitForLoadingPageAuthUser();
+        accessToken = new MainPage(driverRule.getDriver())  // перезапись токена, сохранённого при создании юзера
+                .waitForLoadingPageAuthUser()
+                .getAccessTokenFromLocalStorage();
+        System.out.println("\nAccess token from local storage:\n" + accessToken + "\n");
     }
 }

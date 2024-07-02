@@ -46,5 +46,4 @@ public class DriverRule extends ExternalResource {
     public WebDriver getDriver() {
         return driver;
     }
-
 }
