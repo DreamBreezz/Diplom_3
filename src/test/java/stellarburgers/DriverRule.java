@@ -4,8 +4,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.rules.ExternalResource;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 public class DriverRule extends ExternalResource {
     private WebDriver driver;
@@ -20,22 +19,22 @@ public class DriverRule extends ExternalResource {
         driver.quit();
     }
 
-    // это подредактировать под Яндекс
     public void initDriver() {
-        if ("firefox".equals(System.getProperty("browser"))) {
-            initFirefox();
+        if ("yandex".equals(System.getProperty("browser"))) {
+            initYandex();
         }
         else {
             initChrome();
         }
     }
 
-    // это поменять на Яндекс
-    private void initFirefox() {
-        WebDriverManager.firefoxdriver().setup();
-        var opts = new FirefoxOptions()
-                .configureFromEnv();
-        driver = new FirefoxDriver(opts);
+    private void initYandex() {
+        WebDriverManager.chromedriver().driverVersion(System.getProperty("browser.version")).setup();
+ //       System.setProperty("webdriver.chrome.driver", "src/test/resources/yandexdriver");
+        var opts = new ChromeOptions();
+        opts.setBinary("/Applications/Yandex.app/Contents/MacOS/Yandex");
+
+        driver = new ChromeDriver(opts);
     }
 
     private void initChrome() {
