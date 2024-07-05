@@ -17,12 +17,6 @@ public class ProfilePage {
         this.driver = driver;
     }
 
-    // открытие страницы
-    public ProfilePage openPage() {
-        driver.get(EnvConfig.MAIN_URL + "/account/profile");
-        return this;
-    }
-
     // === Л О К А Т О Р Ы ===
     // кнопка "Сохранить"
     public static final By saveButton = By

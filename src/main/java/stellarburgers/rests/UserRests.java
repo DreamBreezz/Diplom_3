@@ -35,14 +35,4 @@ public class UserRests {
                 .post(LOGIN_PATH)
                 .then().log().all();
     }
-
-    @Step("Изменение данных пользователя пользователя")
-    public ValidatableResponse edit(String token, UserRequestJson user) {
-        return spec()
-                .header("Authorization", token)
-                .body(user)
-                .when()
-                .patch(USER_PATH)
-                .then().log().all();
-    }
 }
