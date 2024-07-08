@@ -16,6 +16,7 @@ import stellarburgers.pages.RegisterPage;
  * вход через кнопку в форме восстановления пароля.
  */
 
+@DisplayName("Навигация по страницам – НЕавторизованным пользователем")
 public class UnauthorizedUserNavigationTests {
     @ClassRule
     public static DriverRule driverRule = new DriverRule();

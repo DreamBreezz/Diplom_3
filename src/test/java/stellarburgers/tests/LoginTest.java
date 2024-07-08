@@ -12,6 +12,7 @@ import stellarburgers.pages.LoginPage;
 import stellarburgers.pages.MainPage;
 import stellarburgers.rests.UserRests;
 
+@DisplayName("Вход пользователя на странице авторизации")
 public class LoginTest {
 
     private static final CreateUserJsonGenerator USER_JSON = new CreateUserJsonGenerator();

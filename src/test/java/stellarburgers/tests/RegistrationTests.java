@@ -19,6 +19,7 @@ import stellarburgers.pages.RegisterPage;
  * Ошибку для некорректного пароля. Минимальный пароль — шесть символов.
  */
 
+@DisplayName("Регистрация пользователя")
 public class RegistrationTests {
 
     private static final CreateUserJsonGenerator USER_JSON = new CreateUserJsonGenerator();

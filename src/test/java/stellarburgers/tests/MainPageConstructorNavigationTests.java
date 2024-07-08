@@ -13,6 +13,7 @@ import stellarburgers.pages.MainPage;
  * «Начинки».
  */
 
+@DisplayName("Навигация по табам конструктора бургеров")
 public class MainPageConstructorNavigationTests {
     @ClassRule
     public static DriverRule driverRule = new DriverRule();

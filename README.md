@@ -9,6 +9,7 @@
 * Java 11
 * Maven 3.8
 * JUnit 4
+* Lombok 1.8.32
 * Rest Assured 5.3.0
 * Allure 2.20.0
 * Selenium 4.19.1
@@ -30,7 +31,7 @@ mvn test
 * browser.version = версия chrome driver, подходящая к вашему Яндекс.Браузеру
 * webdriver.yandex.bin = путь к исполнительному файлу Яндекс.Браузера на вашем устройстве
 ```bash
-mvn -Dbrowser=yandex -Dbrowser.version=122.0.6261.94 -Dwebdriver.yandex.bin="/Applications/Yandex.app/Contents/MacOS/Yandex" test
+mvn -Dbrowser=yandex -Dbrowser.version=122.0.6261.94 -Dwebdriver.yandex.bin=/Applications/Yandex.app/Contents/MacOS/Yandex test
 ```
 Либо используйте собственный способ.
 

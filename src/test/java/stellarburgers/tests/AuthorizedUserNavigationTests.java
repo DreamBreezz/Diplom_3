@@ -22,6 +22,7 @@ import stellarburgers.rests.UserRests;
  * Проверь выход по кнопке «Выйти» в личном кабинете.
  */
 
+@DisplayName("Навигация по страницам – авторизованным пользователем")
 public class AuthorizedUserNavigationTests {
     private static final CreateUserJsonGenerator USER_JSON = new CreateUserJsonGenerator();
     private static final UserRests USER_REST = new UserRests();
