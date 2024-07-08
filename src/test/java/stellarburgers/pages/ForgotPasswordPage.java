@@ -26,23 +26,24 @@ public class ForgotPasswordPage {
 
     // === Л О К А Т О Р Ы ===
     // ссылка "Войти"
-    public static final By enterLink = By.
+    public static final By ENTER_LINK = By.
             xpath(".//a[contains(@href, '/login')]");
 
     // текст "Вспомнили пароль?"
-    public static final By rememberPasswordText = By
+    public static final By REMEMBER_PASSWORD_TEXT = By
             .xpath(".//p[text()='Вспомнили пароль?']");
+
 
     // === Д Е Й С Т В И Я ===
     @Step("Ожидание загрузки страницы")
     public ForgotPasswordPage waitForLoadingPage() {
         new WebDriverWait(driver, Duration.ofSeconds(EnvConfig.DEFAULT_TIMEOUT))
-                .until(ExpectedConditions.visibilityOfElementLocated(rememberPasswordText));
+                .until(ExpectedConditions.visibilityOfElementLocated(REMEMBER_PASSWORD_TEXT));
         return this;
     }
 
     @Step("Клик по ссылке 'Войти'")
     public void clickEnterLink() {
-        driver.findElement(enterLink).click();
+        driver.findElement(ENTER_LINK).click();
     }
 }

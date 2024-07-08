@@ -26,21 +26,21 @@ public class LoginPage {
 
     // === Л О К А Т О Р Ы ===
     // поле "Email"
-    private final By inputEmail = By.xpath(".//label[text()='Email']/following-sibling::input");
+    private final By INPUT_EMAIL = By.xpath(".//label[text()='Email']/following-sibling::input");
 
     // поле "Пароль"
-    private final By inputPassword = By.xpath(".//label[text()='Пароль']/following-sibling::input");
+    private final By INPUT_PASSWORD = By.xpath(".//label[text()='Пароль']/following-sibling::input");
 
     // кнопка "Зарегистрироваться"
-    public static final By registerButton = By.
+    public static final By REGISTER_BUTTON = By.
             xpath(".//a[contains(@href, '/register')]");
 
     // ссылка "Восстановить пароль"
-    public static final By recoverPassButton = By.
+    public static final By RECOVER_PASS_BUTTON = By.
             xpath(".//a[contains(@href, '/forgot-password')]");
 
     // кнопка "Войти"
-    public static final By enterButton = By.
+    public static final By ENTER_BUTTON = By.
             xpath(".//button[text()='Войти']");
 
 
@@ -48,29 +48,29 @@ public class LoginPage {
     @Step("Ожидание загрузки страницы")
     public LoginPage waitForLoadingPage() {
         new WebDriverWait(driver, Duration.ofSeconds(EnvConfig.DEFAULT_TIMEOUT))
-                .until(ExpectedConditions.visibilityOfElementLocated(recoverPassButton));
+                .until(ExpectedConditions.visibilityOfElementLocated(RECOVER_PASS_BUTTON));
         return this;
     }
 
     @Step("Клик по кнопке 'Зарегистрироваться'")
     public void clickRegisterLink() {
-        driver.findElement(registerButton).click();
+        driver.findElement(REGISTER_BUTTON).click();
     }
 
     @Step("Ввод email")
     public LoginPage inputEmail(String email) {
-        driver.findElement(inputEmail).sendKeys(email);
+        driver.findElement(INPUT_EMAIL).sendKeys(email);
         return this;
     }
 
     @Step("Ввод пароля")
     public LoginPage inputPassword(String pass) {
-        driver.findElement(inputPassword).sendKeys(pass);
+        driver.findElement(INPUT_PASSWORD).sendKeys(pass);
         return this;
     }
 
     @Step("Клик по кнопке 'Войти'")
     public void clickEnterButton() {
-        driver.findElement(enterButton).click();
+        driver.findElement(ENTER_BUTTON).click();
     }
 }

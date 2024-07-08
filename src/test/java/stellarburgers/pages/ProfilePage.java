@@ -19,41 +19,42 @@ public class ProfilePage {
 
     // === Л О К А Т О Р Ы ===
     // кнопка "Сохранить"
-    public static final By saveButton = By
+    public static final By SAVE_BUTTON = By
             .xpath(".//button[text()='Сохранить']");
 
     // кнопка "Конструктор"
-    public static final By constructorButton = By
+    public static final By CONSTRUCTOR_BUTTON = By
             .xpath(".//p[text()='Конструктор']/ancestor::a[contains(@href, '/')]");
 
     // логотип
-    public static final By logo = By
+    public static final By LOGO = By
             .xpath(".//div[contains(@class,'AppHeader')]/a[contains(@href, '/')]");
 
     // ссылка "Выход"
-    public static final By logoutLink = By
+    public static final By LOGOUT_LINK = By
             .xpath(".//button[text()='Выход']");
+
 
     // === Д Е Й С Т В И Я ===
     @Step("Ожидание загрузки страницы")
     public ProfilePage waitForLoadingPage() {
         new WebDriverWait(driver, Duration.ofSeconds(EnvConfig.DEFAULT_TIMEOUT))
-                .until(ExpectedConditions.visibilityOfElementLocated(saveButton));
+                .until(ExpectedConditions.visibilityOfElementLocated(SAVE_BUTTON));
         return this;
     }
 
     @Step("Клик по кнопке 'Конструктор'")
     public void clickConstructorButton() {
-        driver.findElement(constructorButton).click();
+        driver.findElement(CONSTRUCTOR_BUTTON).click();
     }
 
     @Step("Клик по логотипу")
     public void clickLogo() {
-        driver.findElement(logo).click();
+        driver.findElement(LOGO).click();
     }
 
     @Step("Клик по кнопке 'Выйти'")
     public void clickLogoutLink() {
-        driver.findElement(logoutLink).click();
+        driver.findElement(LOGOUT_LINK).click();
     }
 }
