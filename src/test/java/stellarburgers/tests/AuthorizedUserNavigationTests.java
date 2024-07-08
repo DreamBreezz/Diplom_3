@@ -23,9 +23,9 @@ import stellarburgers.rests.UserRests;
  */
 
 public class AuthorizedUserNavigationTests {
-    private static final CreateUserJsonGenerator userJson = new CreateUserJsonGenerator();
-    private static final UserRests userRest = new UserRests();
-    private static final Check check = new Check();
+    private static final CreateUserJsonGenerator USER_JSON = new CreateUserJsonGenerator();
+    private static final UserRests USER_REST = new UserRests();
+    private static final Check CHECK = new Check();
 
     public static String accessToken;
     public static String refreshToken;
@@ -36,11 +36,11 @@ public class AuthorizedUserNavigationTests {
     @Before
     @Step("Создание пользователя через API, логин и авторизация")
     public void createUserAndOpenLoginPage() {
-        CreateUserRequestJson newUser = userJson.random();  // генерация json рандомного пользователя
-        ValidatableResponse createUserResponse = userRest.create(newUser);  // создание пользователя через API,
-        check.code201andSuccess(createUserResponse);                  // чтобы не создавать через страницу регистрации
-        refreshToken = check.extractRefreshToken(createUserResponse);
-        accessToken = check.extractAccessToken(createUserResponse);
+        CreateUserRequestJson newUser = USER_JSON.random();  // генерация json рандомного пользователя
+        ValidatableResponse createUserResponse = USER_REST.create(newUser);  // создание пользователя через API,
+        CHECK.code201andSuccess(createUserResponse);                  // чтобы не создавать через страницу регистрации
+        refreshToken = CHECK.extractRefreshToken(createUserResponse);
+        accessToken = CHECK.extractAccessToken(createUserResponse);
 
         new MainPage(driverRule.getDriver())
                 .openPage()            // сначала открытие страницы без параметров, т.к. в Local Storage
@@ -53,9 +53,9 @@ public class AuthorizedUserNavigationTests {
     @After
     @Step("Удаление пользователя через API")
     public void deleteUser() {
-        ValidatableResponse creationResponse = userRest.delete(accessToken);
-        check.code202andSuccess(creationResponse);
-        check.userRemovedMessage(creationResponse);
+        ValidatableResponse creationResponse = USER_REST.delete(accessToken);
+        CHECK.code202andSuccess(creationResponse);
+        CHECK.userRemovedMessage(creationResponse);
         accessToken = null;
         refreshToken = null;
     }

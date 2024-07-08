@@ -14,9 +14,9 @@ import stellarburgers.rests.UserRests;
 
 public class LoginTest {
 
-    private static final CreateUserJsonGenerator userJson = new CreateUserJsonGenerator();
-    private static final UserRests userRest = new UserRests();
-    private static final Check check = new Check();
+    private static final CreateUserJsonGenerator USER_JSON = new CreateUserJsonGenerator();
+    private static final UserRests USER_REST = new UserRests();
+    private static final Check CHECK = new Check();
 
     private static CreateUserRequestJson newUser;
     private static String accessToken;
@@ -27,10 +27,10 @@ public class LoginTest {
     @Before
     @Step("Создание пользователя через API и открытие страницы логина")
     public void createUserAndOpenLoginPage() {
-        newUser = userJson.random();  // генерация json рандомного пользователя
-        ValidatableResponse createUserResponse = userRest.create(newUser);  // создание пользователя
-        check.code201andSuccess(createUserResponse);
-        accessToken = check.extractAccessToken(createUserResponse);  // сохранение токена авторизации на случай,
+        newUser = USER_JSON.random();  // генерация json рандомного пользователя
+        ValidatableResponse createUserResponse = USER_REST.create(newUser);  // создание пользователя
+        CHECK.code201andSuccess(createUserResponse);
+        accessToken = CHECK.extractAccessToken(createUserResponse);  // сохранение токена авторизации на случай,
                                                                      // если логин через браузер не сработает
         new LoginPage(driverRule.getDriver())
                 .openPage()
@@ -40,9 +40,9 @@ public class LoginTest {
     @After
     @Step("Удаление пользователя через API")
     public void deleteUser() {
-        ValidatableResponse creationResponse = userRest.delete(accessToken);
-        check.code202andSuccess(creationResponse);
-        check.userRemovedMessage(creationResponse);
+        ValidatableResponse creationResponse = USER_REST.delete(accessToken);
+        CHECK.code202andSuccess(creationResponse);
+        CHECK.userRemovedMessage(creationResponse);
         accessToken = null;
     }
 

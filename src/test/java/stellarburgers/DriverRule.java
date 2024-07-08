@@ -30,9 +30,8 @@ public class DriverRule extends ExternalResource {
 
     private void initYandex() {
         WebDriverManager.chromedriver().driverVersion(System.getProperty("browser.version")).setup();
- //       System.setProperty("webdriver.chrome.driver", "src/test/resources/yandexdriver");
         var opts = new ChromeOptions();
-        opts.setBinary("/Applications/Yandex.app/Contents/MacOS/Yandex");
+        opts.setBinary(System.getProperty("webdriver.yandex.bin"));
 
         driver = new ChromeDriver(opts);
     }

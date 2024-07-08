@@ -21,10 +21,10 @@ import stellarburgers.pages.RegisterPage;
 
 public class RegistrationTests {
 
-    private static final CreateUserJsonGenerator userJson = new CreateUserJsonGenerator();
-    private static final UserRests userRest = new UserRests();
-    private static final LoginUserJsonGenerator loginJson = new LoginUserJsonGenerator();
-    private static final Check check = new Check();
+    private static final CreateUserJsonGenerator USER_JSON = new CreateUserJsonGenerator();
+    private static final UserRests USER_REST = new UserRests();
+    private static final LoginUserJsonGenerator LOGIN_JSON = new LoginUserJsonGenerator();
+    private static final Check CHECK = new Check();
 
     private static CreateUserRequestJson newUser;
 
@@ -34,7 +34,7 @@ public class RegistrationTests {
     @Before
     @Step("Генерация пользовательских данных, открытие главной страницы и открытие страницы логина")
     public void openPageAndNavigate() {
-        newUser = userJson.random();
+        newUser = USER_JSON.random();
         new MainPage(driverRule.getDriver())
                 .openPage()
                 .waitForLoadingPage()
@@ -48,14 +48,14 @@ public class RegistrationTests {
     @Step("Удаление пользователя через API")
     public void deleteUserIfCreated() {
         String accessToken;
-        var newLogin = loginJson.from(newUser);
-        ValidatableResponse loginUserResponse = userRest.login(newLogin);
-        accessToken = check.extractAccessToken(loginUserResponse);
+        var newLogin = LOGIN_JSON.from(newUser);
+        ValidatableResponse loginUserResponse = USER_REST.login(newLogin);
+        accessToken = CHECK.extractAccessToken(loginUserResponse);
 
         if (accessToken != null) {
-            ValidatableResponse creationResponse = userRest.delete(accessToken);
-            check.code202andSuccess(creationResponse);
-            check.userRemovedMessage(creationResponse);
+            ValidatableResponse creationResponse = USER_REST.delete(accessToken);
+            CHECK.code202andSuccess(creationResponse);
+            CHECK.userRemovedMessage(creationResponse);
         }
     }
 
