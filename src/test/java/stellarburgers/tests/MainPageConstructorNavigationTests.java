@@ -19,14 +19,52 @@ public class MainPageConstructorNavigationTests {
     public static DriverRule driverRule = new DriverRule();
 
     @Test
-    @DisplayName("Клик по табам конструктора по порядку")
-    public void tabClicksContinuousTest() {
+    @DisplayName("Клик по табам: 'Булки'-'Соусы'-'Начинки'")
+    public void tabClicksBunsSaucesIngredientsTest() {
+        new MainPage(driverRule.getDriver())
+                .openPage()
+                .waitForLoadingPage()
+                .clickSaucesTab()
+                .currentTabSauces()
+                .scrollToSauces()
+                .clickIngredientsTab()
+                .currentTabIngredients()
+                .scrollToIngredients();
+    }
+
+    @Test
+    @DisplayName("Клик по табам: 'Булки'-'Соусы'-'Начинки'")
+    public void tabClicksBunsSaucesBunsTest() {
         new MainPage(driverRule.getDriver())
                 .openPage()
                 .waitForLoadingPage()
                 .clickSaucesTab()  // сначала последовательно слева направо
                 .currentTabSauces()
-                .scrollToSauces()
+                .clickBunsTab()
+                .currentTabBuns()
+                .scrollToBuns();
+    }
+
+    @Test
+    @DisplayName("Клик по табам: 'Булки'-'Начинки'-'Булки'")
+    public void tabClicksBunsIngredientsBunsTest() {
+        new MainPage(driverRule.getDriver())
+                .openPage()
+                .waitForLoadingPage()
+                .clickIngredientsTab()
+                .currentTabIngredients()
+                .scrollToIngredients()
+                .clickBunsTab()
+                .currentTabBuns()
+                .scrollToBuns();
+    }
+
+    @Test
+    @DisplayName("Клик по табам: 'Булки'-'Начинки'-'Соусы'")
+    public void tabClicksBunsIngredientsSaucesTest() {
+        new MainPage(driverRule.getDriver())
+                .openPage()
+                .waitForLoadingPage()
                 .clickIngredientsTab()
                 .currentTabIngredients()
                 .scrollToIngredients()
@@ -37,19 +75,4 @@ public class MainPageConstructorNavigationTests {
                 .currentTabBuns()
                 .scrollToBuns();
     }
-
-    @Test
-    @DisplayName("Клик по табам конструктора через одного")
-    public void tabClicksPassingNextTest() {
-        new MainPage(driverRule.getDriver())
-                .openPage()
-                .waitForLoadingPage()
-                .clickIngredientsTab()  // с Булок сразу на Начинки
-                .currentTabIngredients()
-                .scrollToIngredients()
-                .clickBunsTab()  // с Начинок сразу на Булки
-                .currentTabBuns()
-                .scrollToBuns();
-    }
-
 }
